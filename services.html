@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>FluxLane — услуги и заявки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/platform.css">
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Услуги и заявки</span>
+                </span>
+            </a>
+            <nav class="fx-nav">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+            <div class="fx-header-meta">
+                <time class="fx-clock" data-fx-clock></time>
+                <button type="button" class="fx-burger" data-fx-burger aria-controls="fx-mobile-nav"></button>
+            </div>
+        </div>
+    </header>
+    <nav id="fx-mobile-nav" class="fx-mobile-nav" data-fx-mobile-nav>
+        <a href="index.html">Обзор</a>
+        <a href="monitoring.html">Мониторинг</a>
+        <a href="news.html">Новости</a>
+        <a href="events-map.html">Карта событий</a>
+        <a href="analytics.html">Аналитика</a>
+        <a href="traffic-analysis.html">Карта и маршруты</a>
+    </nav>
+
+    <main class="fx-main">
+        <header class="fx-page-head">
+            <h1 class="fx-page-title">Услуги и заявки</h1>
+            <p class="fx-page-desc">Выберите услугу и отправьте заявку. Оператор её рассмотрит, и вы увидите, в каком она состоянии: «В работе», «Завершена» или «Отменена».</p>
+        </header>
+
+        <div id="fx-services-list" class="fx-news-grid fx-news-grid--page" style="margin-bottom:24px"></div>
+
+        <section class="fx-panel" aria-label="Форма заявки">
+            <div class="fx-panel-head">
+                <h2 class="fx-panel-title">Оформить заявку</h2>
+            </div>
+            <div class="fx-panel-body" style="padding:16px">
+                <form id="fx-service-order-form" class="fx-form-stack">
+                    <label>Тип услуги
+                        <select id="fx-order-type" class="fx-input" required>
+                            <option value="tower_rental">Аренда автовышки</option>
+                            <option value="evacuation">Вызов эвакуатора</option>
+                            <option value="other">Консультация / документация</option>
+                        </select>
+                    </label>
+                    <label>Организация / ФИО
+                        <input type="text" id="fx-order-company" class="fx-input" required maxlength="200">
+                    </label>
+                    <label>Контактное лицо
+                        <input type="text" id="fx-order-contact" class="fx-input" required maxlength="120">
+                    </label>
+                    <label>Телефон
+                        <input type="tel" id="fx-order-phone" class="fx-input" required maxlength="30">
+                    </label>
+                    <label>Email
+                        <input type="email" id="fx-order-email" class="fx-input" maxlength="120">
+                    </label>
+                    <label>Адрес / место работ (для выезда)
+                        <input type="text" id="fx-order-address" class="fx-input" maxlength="255">
+                    </label>
+                    <label>Описание задачи
+                        <textarea id="fx-order-desc" class="fx-input" rows="4" required maxlength="2000"></textarea>
+                    </label>
+                    <button type="submit" class="fx-btn fx-btn-primary">Отправить на рассмотрение</button>
+                    <p id="fx-order-msg" class="fx-page-desc" role="status"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+        <footer class="fx-footer">
+        <div class="fx-footer-contacts" aria-label="Контакты">
+            <h3 class="fx-footer-heading">Контакты</h3>
+            <ul id="fx-footer-contacts-list" class="fx-footer-contact-list"></ul>
+        </div>
+        <div class="fx-footer-inner">
+            <span>© <span id="y"></span> FluxLane</span>
+            <span data-fx-footer-links></span>
+        </div>
+    </footer>
+
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="src/services-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>FluxLane — мониторинг</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/platform.css">
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Live Monitoring</span>
+                </span>
+            </a>
+            <nav class="fx-nav">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+            <div class="fx-header-meta">
+                <span class="fx-live-badge">Live</span>
+                <time class="fx-clock" data-fx-clock></time>
+            </div>
+        </div>
+    </header>
+
+    <main class="fx-main">
+        <header class="fx-page-head">
+            <h1 class="fx-page-title">Оперативный мониторинг</h1>
+            <p class="fx-page-desc">Текущее состояние сети и автоматически сформированные уведомления по данным платформы.</p>
+        </header>
+
+        <div class="fx-context-banner" aria-live="polite">
+            <div class="fx-context-item"><strong>Потоки:</strong> <span id="fx-ctx-traffic-period">—</span></div>
+            <div class="fx-context-item"><strong>Безопасность:</strong> <span id="fx-ctx-safety-period">—</span></div>
+            <div class="fx-context-item"><strong>Обновлено:</strong> <span id="fx-ctx-updated">—</span></div>
+        </div>
+
+        <div class="fx-toolbar-row" style="margin-bottom:16px">
+            <label class="fx-page-desc" for="fx-traffic-window">Окно анализа потоков</label>
+            <select id="fx-traffic-window" class="fx-input" style="width:auto;min-width:160px">
+                <option value="all">Вся выборка в базе</option>
+                <option value="30">Последние 30 дней</option>
+                <option value="7">Последние 7 дней</option>
+            </select>
+        </div>
+
+        <div class="fx-monitor-summary">
+            <div class="fx-kpi fx-kpi-compact">
+                <div class="fx-kpi-label">Датчики</div>
+                <div class="fx-kpi-value" data-mon-detectors>—</div>
+            </div>
+            <div class="fx-kpi fx-kpi-compact">
+                <div class="fx-kpi-label">Фиксации (окно)</div>
+                <div class="fx-kpi-value" data-mon-passages>—</div>
+            </div>
+            <div class="fx-kpi fx-kpi-compact">
+                <div class="fx-kpi-label">Маршруты</div>
+                <div class="fx-kpi-value" data-mon-tracks>—</div>
+            </div>
+            <div class="fx-kpi fx-kpi-compact fx-kpi-accent">
+                <div class="fx-kpi-label">Уведомления</div>
+                <div class="fx-kpi-value" data-mon-alerts>—</div>
+            </div>
+        </div>
+
+        <div class="fx-layout-split">
+            <section class="fx-panel">
+                <div class="fx-panel-head">
+                    <h2 class="fx-panel-title">Лента уведомлений</h2>
+                    <button type="button" class="fx-btn fx-btn-ghost" id="fx-refresh-events">Обновить</button>
+                </div>
+                <div class="fx-panel-body">
+                    <div class="fx-toolbar-row">
+                        <input type="search" class="fx-input fx-search" id="fx-event-search" placeholder="Поиск…">
+                        <div class="fx-chip-row">
+                            <button type="button" class="fx-chip is-active" data-sev-filter="all">Все</button>
+                            <button type="button" class="fx-chip" data-sev-filter="info">Инфо</button>
+                            <button type="button" class="fx-chip" data-sev-filter="warn">Предупреждение</button>
+                            <button type="button" class="fx-chip" data-sev-filter="crit">Критическое</button>
+                        </div>
+                    </div>
+                    <div class="fx-events" id="fx-events-feed"></div>
+                </div>
+            </section>
+            <aside class="fx-panel">
+                <div class="fx-panel-head"><h2 class="fx-panel-title">Состояние системы</h2></div>
+                <div class="fx-panel-body">
+                    <ul class="fx-hotspots fx-infra-list" id="fx-infra-stats"></ul>
+                    <div class="fx-panel-actions">
+                        <a class="fx-btn" href="events-map.html">Карта событий</a>
+                        <a class="fx-btn" href="traffic-analysis.html">Карта потоков</a>
+                        <a class="fx-btn fx-btn-primary" href="admin-dashboard.html">Панель администратора</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <section class="fx-section">
+            <div class="fx-section-head">
+                <div>
+                    <h2 class="section-title">Историческая статистика безопасности</h2>
+                    <p class="fx-page-desc">Агрегированные данные по годам из базы — не путать с оперативной лентой выше.</p>
+                </div>
+                <div class="fx-filters stats-filters">
+                    <div class="filter-group">
+                        <label for="accidents-year-select">Год</label>
+                        <select id="accidents-year-select">
+                            <option value="2026">2026</option>
+                            <option value="2025" selected>2025</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="period-select">Режим</label>
+                        <select id="period-select">
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2026">2026</option>
+                            <option value="compare">Сравнение</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="category-select">Категория</label>
+                        <select id="category-select">
+                            <option value="accidents">Дорожные происшествия</option>
+                            <option value="violations">Нарушения</option>
+                            <option value="evacuation">Эвакуация</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="monitor" data-monitor>
+                <h3 id="fx-safety-chart-title">Показатели за выбранный год</h3>
+                <div class="monitor-kpis" data-monitor-kpis>
+                    <div class="kpi"><div class="label" id="kpi-label-1">ДТП</div><div class="value" id="accidents-count">—</div></div>
+                    <div class="kpi"><div class="label" id="kpi-label-2">Ранено</div><div class="value" id="injured-count">—</div></div>
+                    <div class="kpi"><div class="label" id="kpi-label-3">Погибло</div><div class="value" id="deaths-count">—</div></div>
+                </div>
+                <div class="chart fx-chart-box" id="daily-chart"><canvas id="accidents-chart" height="260"></canvas></div>
+                <div class="comparison-charts" id="comparison-charts" hidden>
+                    <div class="chart fx-chart-box"><canvas id="accidents-comparison-chart" height="240"></canvas></div>
+                    <div class="chart fx-chart-box"><canvas id="violations-comparison-chart" height="240"></canvas></div>
+                    <div class="chart fx-chart-box"><canvas id="evacuation-comparison-chart" height="240"></canvas></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fx-footer">
+        <div class="fx-footer-contacts" aria-label="Контакты">
+            <h3 class="fx-footer-heading">Контакты</h3>
+            <ul id="fx-footer-contacts-list" class="fx-footer-contact-list"></ul>
+        </div>
+        <div class="fx-footer-inner">
+            <span>© <span id="y"></span> FluxLane</span>
+            <span data-fx-footer-links></span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="src/fx-chart-theme.js"></script>
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="src/monitoring-page.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+.fx-main-events {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--fx-header-h));
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.fx-events-shell {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  gap: 0;
+  min-height: 0;
+  border-top: 1px solid var(--fx-border);
+}
+
+.fx-events-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+  background: var(--fx-panel);
+  border-right: 1px solid var(--fx-border);
+  overflow: hidden;
+}
+
+.fx-events-rail-head {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--fx-border);
+}
+
+.fx-events-rail-head h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.fx-events-rail-head p {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--fx-muted);
+}
+
+.fx-events-filters {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--fx-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fx-events-filters-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+
+.fx-events-filters-row .fx-input {
+  width: 100%;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.fx-events-filters label {
+  display: block;
+  font-size: 10px;
+  color: var(--fx-muted);
+  margin-bottom: 3px;
+}
+
+.fx-events-severity {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fx-ev-chip {
+  border: 1px solid var(--fx-border);
+  background: var(--fx-bg-2);
+  color: var(--fx-text);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.fx-ev-chip.is-on {
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(56, 189, 248, 0.12);
+  color: #7dd3fc;
+}
+
+.fx-events-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--fx-border);
+}
+
+.fx-events-stats-row .fx-events-stat {
+  margin: 0;
+}
+
+.fx-events-chart-wrap {
+  padding: 0 14px 10px;
+  border-bottom: 1px solid var(--fx-border);
+  height: 100px;
+}
+
+.fx-events-chart-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100px !important;
+}
+
+.fx-events-list-head {
+  padding: 8px 14px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fx-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.fx-events-list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px 12px;
+  min-height: 0;
+}
+
+.fx-events-map-wrap {
+  position: relative;
+  min-height: 0;
+  background: #0a0f18;
+}
+
+#fx-events-map {
+  position: absolute;
+  inset: 0;
+}
+
+.fx-events-map-hud {
+  position: absolute;
+  z-index: 500;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.fx-events-map-hud > * {
+  pointer-events: auto;
+}
+
+.fx-events-legend-float {
+  list-style: none;
+  margin: 0;
+  padding: 8px 10px;
+  background: rgba(8, 11, 18, 0.88);
+  border: 1px solid var(--fx-border);
+  border-radius: 8px;
+  font-size: 10px;
+  color: var(--fx-muted);
+}
+
+.fx-events-legend-float li {
+  margin: 2px 0;
+}
+
+.fx-events-detail-card {
+  width: min(340px, calc(100vw - 340px));
+  background: rgba(8, 11, 18, 0.94);
+  border: 1px solid var(--fx-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  backdrop-filter: blur(8px);
+}
+
+.fx-events-detail-card[hidden] {
+  display: none !important;
+}
+
+.fx-events-detail-card h3 {
+  margin: 0 24px 8px 0;
+  font-size: 13px;
+}
+
+.fx-events-detail-card dl {
+  margin: 0;
+  font-size: 12px;
+}
+
+.fx-events-detail-card dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fx-events-detail-card dt {
+  color: var(--fx-muted);
+}
+
+.fx-events-detail-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: var(--fx-muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.fx-events-empty {
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--fx-muted);
+}
+
+@media (max-width: 960px) {
+  .fx-events-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  .fx-events-rail {
+    max-height: 42vh;
+    border-right: none;
+    border-bottom: 1px solid var(--fx-border);
+  }
+  .fx-events-map-wrap {
+    min-height: 50vh;
+  }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>FluxLane — карта событий</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="src/platform.css">
+    <link rel="stylesheet" href="src/events-map-page.css">
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Карта событий</span>
+                </span>
+            </a>
+            <nav class="fx-nav">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html" aria-current="page">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+            <div class="fx-header-meta">
+                <time class="fx-clock" data-fx-clock></time>
+            </div>
+        </div>
+    </header>
+
+    <main class="fx-main fx-main-events">
+        <div class="fx-events-shell">
+            <aside class="fx-events-rail">
+                <div class="fx-events-rail-head">
+                    <h1>Дорожные события</h1>
+                    <p><span id="fx-events-map-count">0</span> событий · <span id="fx-events-map-range">—</span></p>
+                </div>
+
+                <div class="fx-events-filters">
+                    <div class="fx-events-filters-row">
+                        <div>
+                            <label for="fx-events-from">С</label>
+                            <input type="date" id="fx-events-from" class="fx-input" min="2020-01-01" max="2026-12-31">
+                        </div>
+                        <div>
+                            <label for="fx-events-to">По</label>
+                            <input type="date" id="fx-events-to" class="fx-input" min="2020-01-01" max="2026-12-31">
+                        </div>
+                    </div>
+                    <input type="search" class="fx-input fx-search" id="fx-events-search" placeholder="Поиск: район, улица…">
+                    <div class="fx-events-severity" id="fx-events-severity">
+                        <button type="button" class="fx-ev-chip is-on" data-sev="death">Погибшие</button>
+                        <button type="button" class="fx-ev-chip is-on" data-sev="injured">Пострадавшие</button>
+                        <button type="button" class="fx-ev-chip is-on" data-sev="none">Без пострадавших</button>
+                    </div>
+                    <select id="fx-events-district" class="fx-input" aria-label="Район">
+                        <option value="">Все районы</option>
+                    </select>
+                    <button type="button" class="fx-btn fx-btn-primary" id="fx-events-apply">Обновить</button>
+                </div>
+
+                <div class="fx-events-stats-row">
+                    <div class="fx-events-stat"><span>ДТП</span><strong id="fx-ev-stat-acc">0</strong></div>
+                    <div class="fx-events-stat"><span>Ранено</span><strong id="fx-ev-stat-inj">0</strong></div>
+                    <div class="fx-events-stat"><span>Погибло</span><strong id="fx-ev-stat-death">0</strong></div>
+                </div>
+
+                <div class="fx-events-chart-wrap">
+                    <canvas id="fx-events-district-chart" aria-label="ДТП по районам"></canvas>
+                </div>
+
+                <div class="fx-events-list-head">Список</div>
+                <div class="fx-events-list-scroll">
+                    <div class="fx-events-list" id="fx-events-list"></div>
+                </div>
+            </aside>
+
+            <div class="fx-events-map-wrap">
+                <div id="fx-events-map"></div>
+                <div class="fx-events-map-hud">
+                    <div class="fx-events-detail-card" id="fx-event-detail" hidden>
+                        <button type="button" class="fx-events-detail-close" id="fx-event-detail-close" aria-label="Закрыть">×</button>
+                        <h3 id="fx-event-detail-title">Событие</h3>
+                        <dl id="fx-event-detail-body"></dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="src/fx-map-tiles.js?v=attribution-off"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="src/fx-chart-theme.js"></script>
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="src/events-map.js?v=7"></script>
+</body>
+</html>

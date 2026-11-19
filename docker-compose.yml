@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  codd-app:
+    build: .
+    container_name: codd-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET:-change-me}
+      # - GRAPHHOPPER_URL=http://host.docker.internal:8989
+    volumes:
+      - ./uploads:/usr/src/app/uploads
+      - ./database.sqlite:/usr/src/app/database.sqlite
+    restart: unless-stopped
+

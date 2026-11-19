@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>FluxLane — обзор дорожной ситуации</title>
+    <meta name="description" content="FluxLane — платформа аналитики, мониторинга и визуализации дорожного движения.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="src/platform.css">
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark" aria-hidden="true">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Traffic Intelligence</span>
+                </span>
+            </a>
+            <nav class="fx-nav" aria-label="Основная навигация">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+            <div class="fx-header-meta">
+                <span class="fx-live-badge">Live</span>
+                <span class="fx-status"><span class="fx-status-dot" data-fx-data-pulse aria-hidden="true"></span> Система</span>
+                <time class="fx-clock" data-fx-clock aria-live="polite"></time>
+                <button type="button" class="fx-burger" data-fx-burger aria-expanded="false" aria-controls="fx-mobile-nav">
+                    <span></span><span></span><span></span>
+                    <span class="sr-only">Меню</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <nav id="fx-mobile-nav" class="fx-mobile-nav" data-fx-mobile-nav aria-label="Мобильная навигация">
+        <a href="index.html">Обзор</a>
+        <a href="monitoring.html">Мониторинг</a>
+        <a href="news.html">Новости</a>
+        <a href="events-map.html">Карта событий</a>
+        <a href="analytics.html">Аналитика потоков</a>
+        <a href="traffic-analysis.html">Карта и маршруты</a>
+    </nav>
+
+    <main class="fx-main" id="main">
+        <header class="fx-page-head">
+            <h1 class="fx-page-title">Обзор дорожной ситуации</h1>
+            <p class="fx-page-desc">Ключевые метрики транспортной сети, карта датчиков и сводная аналитика.</p>
+        </header>
+
+        <div class="fx-grid-dashboard" aria-label="Ключевые показатели">
+            <div class="fx-kpi">
+                <div class="fx-kpi-label">Фиксации потока</div>
+                <div class="fx-kpi-value" data-metric="intensity">—</div>
+                <div class="fx-kpi-delta" data-metric-sub="intensity">загрузка…</div>
+            </div>
+            <div class="fx-kpi">
+                <div class="fx-kpi-label">Средняя скорость</div>
+                <div class="fx-kpi-value" data-metric="speed">—</div>
+                <div class="fx-kpi-delta" data-metric-sub="speed"></div>
+            </div>
+            <div class="fx-kpi">
+                <div class="fx-kpi-label">Загруженность сети</div>
+                <div class="fx-kpi-value" data-metric="load">—</div>
+                <div class="fx-kpi-delta" data-metric-sub="load"></div>
+            </div>
+            <div class="fx-kpi">
+                <div class="fx-kpi-label">Датчики online</div>
+                <div class="fx-kpi-value" data-metric="detectors">—</div>
+                <div class="fx-kpi-delta" data-metric-sub="detectors"></div>
+            </div>
+            <div class="fx-kpi">
+                <div class="fx-kpi-label">Маршруты в базе</div>
+                <div class="fx-kpi-value" data-metric="tracks">—</div>
+                <div class="fx-kpi-delta" data-metric-sub="tracks"></div>
+            </div>
+            <div class="fx-kpi fx-kpi-accent">
+                <div class="fx-kpi-label">Активные события</div>
+                <div class="fx-kpi-value" data-metric="alerts">—</div>
+                <div class="fx-kpi-delta" data-metric-sub="alerts"></div>
+            </div>
+        </div>
+
+        <section class="fx-panel fx-live-strip" aria-label="Оперативная сводка">
+            <div class="fx-panel-head">
+                <h2 class="fx-panel-title">Оперативная лента</h2>
+            </div>
+            <div class="fx-live-strip-inner" id="fx-home-events" aria-live="polite"></div>
+            <div class="fx-live-more">
+                <a class="fx-btn fx-btn-ghost" href="monitoring.html">Весь мониторинг</a>
+            </div>
+        </section>
+
+        <section id="news" class="fx-panel fx-news-section" aria-label="Новости">
+            <div class="fx-panel-head">
+                <h2 class="fx-panel-title">Новости</h2>
+                <a class="fx-btn fx-btn-ghost" id="fx-news-all-btn" href="news.html" hidden>Все новости →</a>
+            </div>
+            <p id="fx-news-empty" class="fx-news-empty" hidden>Пока нет опубликованных новостей.</p>
+            <div id="fx-news-grid" class="fx-news-grid"></div>
+        </section>
+
+        <div class="fx-layout-split">
+            <section class="fx-panel" aria-label="Карта мониторинга">
+                <div class="fx-panel-head">
+                    <h2 class="fx-panel-title">Транспортная карта</h2>
+                    <a class="fx-btn fx-btn-ghost" href="traffic-analysis.html">Полный режим →</a>
+                </div>
+                <div id="fx-overview-map" class="fx-map-wrap" role="application" aria-label="Карта датчиков"></div>
+                <p class="fx-map-caption">Маркеры — датчики сети. Цвет отражает расчётную загруженность.</p>
+            </section>
+            <aside class="fx-panel">
+                <div class="fx-panel-head">
+                    <h2 class="fx-panel-title">Проблемные участки</h2>
+                </div>
+                <div class="fx-panel-body fx-panel-body-tight">
+                    <ul class="fx-hotspots" id="fx-hotspots"></ul>
+                    <div class="fx-panel-actions">
+                        <a class="fx-btn" href="analytics.html">Аналитика участков</a>
+                        <a class="fx-btn fx-btn-primary" href="monitoring.html">Мониторинг</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <section id="analytics" class="fx-section section section-analytics" aria-label="Сводная аналитика">
+            <div class="fx-section-head">
+                <div>
+                    <h2 class="section-title">Аналитика дорожной обстановки</h2>
+                    <p class="fx-page-desc">Динамика показателей по категориям и периодам (данные из подключённых источников).</p>
+                </div>
+                <div class="fx-filters stats-filters">
+                    <div class="filter-group" id="accidents-year-group">
+                        <label for="accidents-year-select">Год (ДТП)</label>
+                        <select id="accidents-year-select">
+                            <option value="2026">2026</option>
+                            <option value="2025" selected>2025</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="period-select">Режим</label>
+                        <select id="period-select">
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2026">2026</option>
+                            <option value="compare">Сравнение 2024–2025</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="category-select">Категория</label>
+                        <select id="category-select">
+                            <option value="accidents">Дорожные происшествия</option>
+                            <option value="violations">Нарушения</option>
+                            <option value="evacuation">Эвакуация</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="monitor" data-monitor>
+                <h3>Показатели за текущий год</h3>
+                <div class="monitor-kpis" data-monitor-kpis>
+                    <div class="kpi">
+                        <div class="label" id="kpi-label-1">Кол-во ДТП с пострадавшими</div>
+                        <div class="value" id="accidents-count">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="label" id="kpi-label-2">Ранено</div>
+                        <div class="value" id="injured-count">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="label" id="kpi-label-3">Погибло</div>
+                        <div class="value" id="deaths-count">—</div>
+                    </div>
+                </div>
+
+                <div class="monitor-legend" data-monitor-legend>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color:#38bdf8;"></div>
+                        <span>ДТП</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color:#ef4444;"></div>
+                        <span>Погибло</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color:#2563eb;"></div>
+                        <span>Ранено</span>
+                    </div>
+                </div>
+
+                <div class="chart fx-chart-box" data-monitor-chart id="daily-chart">
+                    <canvas id="accidents-chart" height="280"></canvas>
+                </div>
+
+                <div class="comparison-charts" id="comparison-charts" hidden>
+                    <div class="chart" data-comparison-chart>
+                        <h3>Сравнение по дням недели</h3>
+                        <canvas id="accidents-comparison-chart" height="260"></canvas>
+                    </div>
+                    <div class="chart" data-comparison-chart>
+                        <h3>Нарушения: сравнение периодов</h3>
+                        <canvas id="violations-comparison-chart" height="260"></canvas>
+                    </div>
+                    <div class="chart" data-comparison-chart>
+                        <h3>Эвакуация: сравнение периодов</h3>
+                        <canvas id="evacuation-comparison-chart" height="260"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fx-footer">
+        <div class="fx-footer-contacts" id="contacts" aria-label="Контакты">
+            <h3 class="fx-footer-heading">Контакты</h3>
+            <ul id="fx-footer-contacts-list" class="fx-footer-contact-list"></ul>
+        </div>
+        <div class="fx-footer-inner">
+            <span>© <span id="y"></span> FluxLane · платформа аналитики дорожного движения</span>
+            <span data-fx-footer-links></span>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="src/fx-map-tiles.js?v=attribution-off"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="src/fx-chart-theme.js"></script>
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="src/utils.js"></script>
+    <script src="src/news-feed.js"></script>
+    <script src="src/home-news.js"></script>
+    <script src="src/monitoring-page.js"></script>
+    <script src="src/dashboard-metrics.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>

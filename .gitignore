@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.production.example
+uploads/
+_ftp_upload/
+database.sqlite
+*.log
+npm-debug.log*
+Thumbs.db
+Desktop.ini
+.DS_Store

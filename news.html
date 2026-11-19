@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>FluxLane — новости и проекты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/platform.css">
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Новости и проекты</span>
+                </span>
+            </a>
+            <nav class="fx-nav" aria-label="Основная навигация">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+            <div class="fx-header-meta">
+                <time class="fx-clock" data-fx-clock></time>
+                <button type="button" class="fx-burger" data-fx-burger aria-expanded="false" aria-controls="fx-mobile-nav">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <nav id="fx-mobile-nav" class="fx-mobile-nav" data-fx-mobile-nav>
+        <a href="index.html">Обзор</a>
+        <a href="monitoring.html">Мониторинг</a>
+        <a href="news.html">Новости</a>
+        <a href="events-map.html">Карта событий</a>
+        <a href="analytics.html">Аналитика</a>
+        <a href="traffic-analysis.html">Карта и маршруты</a>
+    </nav>
+
+    <main class="fx-main">
+        <header class="fx-page-head">
+            <h1 class="fx-page-title">Новости и проекты</h1>
+            <p class="fx-page-desc">Материалы о дорожной инфраструктуре и безопасности Смоленской области (2024–2026), с указанием источников.</p>
+        </header>
+
+        <div class="fx-tab-row" role="tablist">
+            <button type="button" class="fx-tab is-active" data-fx-news-tab="news" role="tab">Новости</button>
+            <button type="button" class="fx-tab" data-fx-news-tab="projects" role="tab">Проекты</button>
+        </div>
+
+        <section data-fx-news-panel="news" class="fx-panel fx-news-section">
+            <p id="fx-news-page-empty" class="fx-news-empty" hidden>Нет опубликованных новостей.</p>
+            <div id="fx-news-page-grid" class="fx-news-grid fx-news-grid--page"></div>
+        </section>
+
+        <section data-fx-news-panel="projects" class="fx-panel fx-news-section" hidden>
+            <p id="fx-projects-empty" class="fx-news-empty" hidden>Нет опубликованных проектов.</p>
+            <div id="fx-projects-grid" class="fx-news-grid fx-news-grid--page"></div>
+        </section>
+    </main>
+
+        <footer class="fx-footer">
+        <div class="fx-footer-contacts" aria-label="Контакты">
+            <h3 class="fx-footer-heading">Контакты</h3>
+            <ul id="fx-footer-contacts-list" class="fx-footer-contact-list"></ul>
+        </div>
+        <div class="fx-footer-inner">
+            <span>© <span id="y"></span> FluxLane</span>
+            <span data-fx-footer-links></span>
+        </div>
+    </footer>
+
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="src/utils.js"></script>
+    <script src="src/news-feed.js"></script>
+</body>
+</html>

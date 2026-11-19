@@ -1,0 +1,11 @@
+SetEnv GHOST_NODE_VERSION_CHECK false
+SetEnv DB_DIALECT mysql
+PassengerStartupFile app.js
+PassengerResolveSymlinksInDocumentRoot on
+<IfModule mod_authz_core.c>
+  Require all granted
+</IfModule>
+PassengerAppType node
+PassengerAppRoot /home/a1327438/domains/viperxds.ru/public_html
+PassengerStickySessions on
+Options -MultiViews

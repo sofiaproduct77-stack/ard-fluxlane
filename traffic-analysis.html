@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluxLane — карта и маршруты</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/platform.css">
+    <link rel="stylesheet" href="src/traffic-map-page.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Карта и маршруты</span>
+                </span>
+            </a>
+            <nav class="fx-nav">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+        </div>
+    </header>
+    <div class="fx-map-page">
+        <aside class="toolbar" id="mapToolbar">
+            <details class="tb-section" open>
+                <summary>Потоки на карте</summary>
+                <input type="datetime-local" id="tracksFrom" aria-label="Начало">
+                <input type="datetime-local" id="tracksTo" aria-label="Конец">
+                <p class="tb-hint" id="tracksStatus">Укажите период и нажмите «Показать»</p>
+                <div class="tb-btns">
+                    <button class="btn" type="button" id="loadTracksBtn">Показать</button>
+                    <button class="btn secondary" type="button" id="clearBtn">Сброс</button>
+                </div>
+            </details>
+
+            <details class="tb-section" open>
+                <summary>Маршрут A → B</summary>
+                <p class="tb-hint" id="clickStatus">Выберите две точки на карте</p>
+                <div class="tb-btns">
+                    <button class="btn" type="button" id="selectPointsBtn">Точки на карте</button>
+                    <button class="btn secondary" type="button" id="clearPointsBtn">Сброс точек</button>
+                </div>
+                <button class="btn" type="button" id="shortestPathBtn" disabled>Найти маршрут</button>
+                <button class="btn secondary" type="button" id="clearRouteBtn">Очистить линию</button>
+            </details>
+
+            <details class="tb-section">
+                <summary>Дополнительно</summary>
+                <label class="tb-label">Совместное движение</label>
+                <div class="select-wrap">
+                    <input id="cmVehicle" placeholder="Номер ТС">
+                    <div id="vehicleSuggest" class="suggest"></div>
+                </div>
+                <div class="tb-row2">
+                    <input type="number" id="cmMinK" value="3" min="1" title="Мин. узлов">
+                    <input type="number" id="cmDelta" value="120" min="1" title="Макс. Δ сек">
+                </div>
+                <button class="btn" type="button" id="coMovementBtn">Анализ</button>
+                <label class="tb-label">Топ маршруты</label>
+                <div class="tb-row2">
+                    <input type="number" id="topN" value="10" min="1">
+                    <button class="btn" type="button" id="clustersBtn">Показать</button>
+                </div>
+                <button class="btn secondary" type="button" id="comparisonBtn">Сравнить периоды</button>
+                <button class="btn secondary" type="button" id="problemsBtn">Проблемные зоны</button>
+            </details>
+        </aside>
+
+        <div id="map"></div>
+        <div class="legend">
+            <span class="chip"><span class="dot" style="background:#2563eb"></span> Датчики</span>
+            <span class="chip"><span class="dot" style="background:#1f78b4"></span> Треки</span>
+            <span class="chip"><span class="dot" style="background:#38bdf8"></span> Маршрут</span>
+        </div>
+        <div id="sidePanel" class="side-panel" style="display:none"></div>
+
+        <div id="comparisonModal" class="fx-modal" hidden>
+            <div class="fx-modal-card">
+                <h3>Сравнение периодов</h3>
+                <div class="fx-modal-grid">
+                    <div>
+                        <input type="datetime-local" id="compFrom1">
+                        <input type="datetime-local" id="compTo1">
+                    </div>
+                    <div>
+                        <input type="datetime-local" id="compFrom2">
+                        <input type="datetime-local" id="compTo2">
+                    </div>
+                </div>
+                <input type="number" id="compTopN" value="10" min="1" max="20" style="width:72px">
+                <div class="tb-btns" style="justify-content:flex-end;margin-top:10px">
+                    <button type="button" class="btn secondary" id="compCancelBtn">Отмена</button>
+                    <button type="button" class="btn" id="compStartBtn">Сравнить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="src/fx-map-tiles.js?v=attribution-off"></script>
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="src/traffic-analysis.js?v=attribution-off"></script>
+</body>
+</html>

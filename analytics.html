@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>FluxLane — аналитика потоков</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/platform.css">
+</head>
+<body class="fx-body">
+    <header class="fx-header">
+        <div class="fx-header-inner">
+            <a href="index.html" class="fx-brand">
+                <span class="fx-brand-mark">FL</span>
+                <span class="fx-brand-text">
+                    <span class="fx-brand-name">FluxLane</span>
+                    <span class="fx-brand-tag">Traffic Intelligence</span>
+                </span>
+            </a>
+            <nav class="fx-nav">
+                <a href="index.html">Обзор</a>
+                <a href="monitoring.html">Мониторинг</a>
+                <a href="news.html">Новости</a>
+                <a href="events-map.html">Карта событий</a>
+                <a href="analytics.html">Аналитика потоков</a>
+                <a href="traffic-analysis.html">Карта и маршруты</a>
+            </nav>
+            <div class="fx-header-meta">
+                <span class="fx-live-badge">Live</span>
+                <time class="fx-clock" data-fx-clock></time>
+                <button type="button" class="fx-burger" data-fx-burger><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+    <nav class="fx-mobile-nav" data-fx-mobile-nav>
+        <a href="index.html">Обзор</a>
+        <a href="monitoring.html">Мониторинг</a>
+        <a href="analytics.html">Аналитика потоков</a>
+        <a href="traffic-analysis.html">Карта и маршруты</a>
+    </nav>
+
+    <main class="fx-main">
+        <header class="fx-page-head">
+            <h1 class="fx-page-title">Аналитика транспортных потоков</h1>
+            <p class="fx-page-desc">Интенсивность и скорость на участках между датчиками. Данные строятся по импортированным проездам.</p>
+        </header>
+
+        <div class="fx-filters" style="margin-bottom:16px">
+            <div class="filter-group">
+                <label for="fx-from">Начало периода</label>
+                <input type="datetime-local" id="fx-from" class="fx-input">
+            </div>
+            <div class="filter-group">
+                <label for="fx-to">Конец периода</label>
+                <input type="datetime-local" id="fx-to" class="fx-input">
+            </div>
+            <div class="filter-group" style="align-self:flex-end">
+                <button type="button" class="fx-btn fx-btn-primary" id="fx-load-stats">Рассчитать</button>
+            </div>
+        </div>
+
+        <div class="fx-layout-split">
+            <section class="fx-panel">
+                <div class="fx-panel-head">
+                    <h2 class="fx-panel-title">Интенсивность по участкам</h2>
+                </div>
+                <div class="fx-panel-body">
+                    <div class="chart" style="height:320px">
+                        <canvas id="fx-intensity-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+            <section class="fx-panel">
+                <div class="fx-panel-head">
+                    <h2 class="fx-panel-title">Средняя скорость</h2>
+                </div>
+                <div class="fx-panel-body">
+                    <div class="chart" style="height:320px">
+                        <canvas id="fx-speed-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <p style="margin-top:20px">
+            <a class="fx-btn" href="traffic-analysis.html">Открыть карту маршрутов и совместного движения →</a>
+        </p>
+    </main>
+
+        <footer class="fx-footer">
+        <div class="fx-footer-contacts" aria-label="Контакты">
+            <h3 class="fx-footer-heading">Контакты</h3>
+            <ul id="fx-footer-contacts-list" class="fx-footer-contact-list"></ul>
+        </div>
+        <div class="fx-footer-inner">
+            <span>© <span id="y"></span> FluxLane</span>
+            <span data-fx-footer-links></span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="src/platform-shell.js"></script>
+    <script src="src/platform-footer.js"></script>
+    <script src="src/analytics-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+const fs = require('fs');
+const p = 'C:/Users/dtro2/Desktop/ARD/src/traffic-analysis.js';
+let c = fs.readFileSync(p, 'utf8');
+c = c.replace(/Сmолensk/g, 'Смоленск');
+c = c.replace(/Сmolensk/g, 'Смоленск');
+c = c.replace(/Заднепровский · Королёvka/g, 'Заднепровский район');
+c = c.replace(/Заднепровский · Королёvka/g, 'Заднепровский район');
+c = c.replace(/Заднепровский · Корол[^\']+/g, 'Заднепровский район');
+fs.writeFileSync(p, c);
+const h = 'C:/Users/dtro2/Desktop/ARD/traffic-analysis.html';
+let hc = fs.readFileSync(h, 'utf8');
+hc = hc.replace(/Корол[^\s<]+/g, 'Заднепровский');
+fs.writeFileSync(h, hc);
+console.log('ok');
